@@ -1,0 +1,172 @@
+vsim -gui work.Timer_8254
+# vsim -gui work.Timer_8254 
+# Loading work.Timer_8254
+# Loading work.Counter
+# Loading work.CountingElement
+# Loading work.ControlLogic
+add wave -position insertpoint  \
+sim:/Timer_8254/D \
+sim:/Timer_8254/A \
+sim:/Timer_8254/WR \
+sim:/Timer_8254/RD \
+sim:/Timer_8254/CS \
+sim:/Timer_8254/CLK \
+sim:/Timer_8254/GATE \
+sim:/Timer_8254/OUT \
+sim:/Timer_8254/data_bus \
+sim:/Timer_8254/counter_out \
+sim:/Timer_8254/control_word \
+sim:/Timer_8254/counter0/latched_count \
+sim:/Timer_8254/counter0/current_count \
+sim:/Timer_8254/counter1/latched_count \
+sim:/Timer_8254/counter1/current_count \
+sim:/Timer_8254/counter2/latched_count \
+sim:/Timer_8254/counter2/current_count \
+sim:/Timer_8254/counter0/null_count \
+sim:/Timer_8254/counter1/null_count \
+sim:/Timer_8254/counter2/null_count
+
+#Write
+force -freeze {sim:/Timer_8254/CLK[0]} 1 0, 0 {50 ps} -r 100
+force -freeze {sim:/Timer_8254/CLK[1]} 1 0, 0 {100 ps} -r 200
+force -freeze {sim:/Timer_8254/CLK[2]} 1 0, 0 {200 ps} -r 400
+force -freeze sim:/Timer_8254/D 00010000 0
+force -freeze sim:/Timer_8254/A 11 0
+force -freeze sim:/Timer_8254/WR 0 0
+force -freeze sim:/Timer_8254/RD 1 0
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
+run
+force -freeze sim:/Timer_8254/D 01100001 0
+run
+run
+force -freeze sim:/Timer_8254/D 10110000 0
+run
+run
+force -freeze sim:/Timer_8254/D 00000111 0
+force -freeze sim:/Timer_8254/A 00 0
+run
+force -freeze sim:/Timer_8254/A 10 0
+force -freeze sim:/Timer_8254/D 00000111 0
+run
+force -freeze sim:/Timer_8254/D 00000100 0
+force -freeze sim:/Timer_8254/A 01 0
+run
+force -freeze sim:/Timer_8254/A 10 0
+force -freeze sim:/Timer_8254/D 00000010 0
+run
+
+add wave -position insertpoint  \
+sim:/Timer_8254/counter0/load_new_count
+add wave -position insertpoint  \
+sim:/Timer_8254/counter1/load_new_count
+add wave -position insertpoint  \
+sim:/Timer_8254/counter2/load_new_count
+force -freeze sim:/Timer_8254/counter0/load_new_count 1 0
+force -freeze sim:/Timer_8254/counter1/load_new_count 1 0
+force -freeze sim:/Timer_8254/counter2/load_new_count 1 0
+run
+run
+force -freeze sim:/Timer_8254/counter0/load_new_count 0 0
+force -freeze sim:/Timer_8254/counter1/load_new_count 0 0
+force -freeze sim:/Timer_8254/counter2/load_new_count 0 0
+run
+run
+run
+run
+run
+run
+run
+run
+
+#Counter Latch command
+force -freeze sim:/Timer_8254/D 00000000 0
+force -freeze sim:/Timer_8254/A 11 0
+run
+force -freeze sim:/Timer_8254/D 01000000 0
+run
+force -freeze sim:/Timer_8254/D 10000000 0
+run
+run
+run
+run
+run
+run
+force -freeze sim:/Timer_8254/A 00 0
+force -freeze sim:/Timer_8254/WR 1 0
+force -freeze sim:/Timer_8254/RD 0 0
+noforce sim:/Timer_8254/D
+run
+force -freeze sim:/Timer_8254/D 01100001 0
+force -freeze sim:/Timer_8254/A 11 0
+force -freeze sim:/Timer_8254/WR 0 0
+force -freeze sim:/Timer_8254/RD 1 0
+run
+force -freeze sim:/Timer_8254/D 00000100 0
+force -freeze sim:/Timer_8254/A 01 0
+force -freeze sim:/Timer_8254/counter1/load_new_count 1 0
+run
+run
+run
+run
+run
+run
+force -freeze sim:/Timer_8254/counter1/load_new_count 0 0
+run
+force -freeze sim:/Timer_8254/A 10 0
+force -freeze sim:/Timer_8254/WR 1 0
+force -freeze sim:/Timer_8254/RD 0 0
+noforce sim:/Timer_8254/D
+force -freeze sim:/Timer_8254/counter2/latched_count 0101010110101010 0
+run
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
+noforce sim:/Timer_8254/counter2/latched_count
+
+#Read-back command
+force -freeze sim:/Timer_8254/D 11001010 0
+force -freeze sim:/Timer_8254/A 11 0
+force -freeze sim:/Timer_8254/WR 0 0
+force -freeze sim:/Timer_8254/RD 1 0
+run
+run
+run
+noforce sim:/Timer_8254/D
+force -freeze sim:/Timer_8254/A 00 0
+force -freeze sim:/Timer_8254/WR 1 0
+force -freeze sim:/Timer_8254/RD 0 0
+run
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
+force -freeze sim:/Timer_8254/A 10 0
+run
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
+
+#Simple read
+force -freeze sim:/Timer_8254/A 00 0
+run
+force -freeze sim:/Timer_8254/A 01 0
+run
+force -freeze sim:/Timer_8254/A 10 0
+run
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
+force -freeze sim:/Timer_8254/CS 1 0
+run
+force -freeze sim:/Timer_8254/CS 0 0
+run
